@@ -19,7 +19,7 @@ on:
       deps:
         description: "Dependencies"
         required: false
-        default: ""
+        default: "kubejs"
       assets:
         type: boolean
         description: "Generate assets"

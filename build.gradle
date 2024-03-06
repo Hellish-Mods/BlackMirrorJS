@@ -1,25 +1,28 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = "${System.env.VERSION}"
-group = 'site.hellishmods.hellishtemplate'
-archivesBaseName = 'hellishtemplate'
+group = 'site.hellishmods.blackmirrorjs'
+archivesBaseName = 'blackmirrorjs'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'parchment', version: '2022.03.06-1.16.5'
 
     runs {
         client {
@@ -28,8 +31,11 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             mods {
-                hellishtemplate {
+                blackmirrorjs {
                     source sourceSets.main
                 }
             }
@@ -41,7 +47,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                hellishtemplate {
+                blackmirrorjs {
                     source sourceSets.main
                 }
             }
@@ -54,23 +60,42 @@ repositories {
         name "cursemaven"
         url "https://cursemaven.com"
     }
+    maven { // Arch
+        url = "https://maven.architectury.dev"
+        content {
+            includeGroup "me.shedaniel"
+            includeGroup "me.shedaniel.cloth"
+        }
+    }
+    maven { // KJS
+        url = "https://maven.saps.dev/minecraft"
+        content {
+            includeGroup "dev.latvian.mods"
+        }
+    }
+    maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
-    implementation fg.deobf("curse.maven:jei-238222:4060770")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.153:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.153")
+    
+    implementation fg.deobf("me.shedaniel:architectury-forge:1.22.32")
+    implementation fg.deobf("dev.latvian.mods:kubejs-forge:1605.3.19-build.229")
+    implementation fg.deobf("dev.latvian.mods:rhino-forge:1605.1.5-build.75")
 }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "hellishtemplate",
-            "Specification-Vendor": "hellishtemplateareus",
+            "Specification-Title": "blackmirrorjs",
+            "Specification-Vendor": "blackmirrorjsareus",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"hellishtemplatesareus",
+            "Implementation-Vendor" :"blackmirrorjssareus",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

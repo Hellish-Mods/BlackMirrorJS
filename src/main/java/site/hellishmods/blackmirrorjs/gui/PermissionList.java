@@ -31,12 +31,12 @@ public class PermissionList extends ExtendedList<PermissionList.PermissionEntry>
         public PermissionEntry(Permission perm) {
             this.perm = perm;
         }
-        private void drawText(MatrixStack stack, String text, int top) {
-            ms.font.drawShadow(stack, text, (float)(ms.screen.width/2-ms.font.width(text)/2), (float)(top+1), 16777215, true);
+        private void drawText(MatrixStack stack, String text, int top, int color) {
+            ms.font.drawShadow(stack, text, (float)(ms.screen.width/2-ms.font.width(text)/2), (float)(top+1), color, true);
         }
         @Override
         public void render(MatrixStack stack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean mouseOver, float partialTicks) {
-            drawText(stack, perm.title, top);
+            drawText(stack, perm.title+" ["+perm.level.suffix+"]", top, perm.level.color);
         }
     }
 }

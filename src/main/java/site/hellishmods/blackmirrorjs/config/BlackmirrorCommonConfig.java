@@ -23,7 +23,7 @@ public class BlackmirrorCommonConfig {
         ArrayList<Permission> perms = new ArrayList<>();
         PERM_IDS.get().forEach(id -> {
             Permission perm = Permission.getPermById(id);
-            if (perm!=null) perms.add(perm);
+            if (perm!=null && !perms.contains(perm)) perms.add(perm);
         });
         return perms;
     }

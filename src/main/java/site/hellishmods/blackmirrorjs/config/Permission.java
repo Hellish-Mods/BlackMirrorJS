@@ -10,7 +10,7 @@ import site.hellishmods.blackmirrorjs.lib.LangKeys;
 public class Permission {
     private static final HashMap<String, String> LANG_KEYS = LangKeys.getLangKeys(Minecraft.getInstance());
     private static final List<Permission> PERMISSIONS = Arrays.asList(
-        new Permission("example")
+        new Permission("example", PermissionLevel.GREEN)
     );
     private static final HashMap<String, Permission> ID_TO_PERM = new HashMap<>();
     static {
@@ -25,10 +25,15 @@ public class Permission {
     }
 
     public String id;
-    public String title; // TODO: perm levels and colors
+    public String title;
+    public String description;
+    public PermissionLevel level;
 
-    private Permission(String id) {
+    private Permission(String id, PermissionLevel level) {
         this.id = id;
+        this.level = level;
+
         title = LANG_KEYS.get("permissions."+id);
+        description = LANG_KEYS.get("permissions."+id+".desc");
     }
 }

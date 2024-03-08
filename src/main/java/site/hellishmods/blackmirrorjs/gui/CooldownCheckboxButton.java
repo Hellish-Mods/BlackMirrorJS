@@ -10,6 +10,8 @@ import net.minecraft.util.text.TextFormatting;
 import site.hellishmods.blackmirrorjs.lib.Cooldown;
 import site.hellishmods.blackmirrorjs.lib.LangKeys;
 
+import static site.hellishmods.blackmirrorjs.lib.TextComponentToReorderingProcessor.toReorderProcessor;
+
 public class CooldownCheckboxButton extends CheckboxButton {
     private Cooldown cooldown;
     private Minecraft ms;
@@ -38,6 +40,6 @@ public class CooldownCheckboxButton extends CheckboxButton {
     @Override
     public void renderToolTip(MatrixStack stack, int x, int y) {
         if (active) return;
-        ms.screen.renderTooltip(stack, ms.font.split(new StringTextComponent(String.format(LangKeys.getLangKeys(ms).get("cooldown"), (int)Math.ceil(cooldown.ticks/20f))), Math.max(ms.screen.width / 2 - 43, 170)), x, y);
+        ms.screen.renderTooltip(stack, toReorderProcessor(new StringTextComponent(String.format(LangKeys.getLangKeys(ms).get("cooldown"), (int)Math.ceil(cooldown.ticks/20f))), ms), x, y);
     }
 }

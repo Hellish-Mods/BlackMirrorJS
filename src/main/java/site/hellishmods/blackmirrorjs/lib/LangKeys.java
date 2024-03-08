@@ -26,6 +26,7 @@ public class LangKeys {
         en_us.put("donotshowagain", "Don't show this popup again after restarting the game");
         en_us.put("continue", "I understand all of the risks, continue");
         en_us.put("permissions.example", "Example");
+        en_us.put("permissions.example.desc", "This permission does nothing. It only serves as a sign to modpack developers that the mod has been loaded correctly. (Hi btw!)");
         LANG_KEYS.put("en_us", en_us);
     } 
 

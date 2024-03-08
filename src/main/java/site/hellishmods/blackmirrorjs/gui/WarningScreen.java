@@ -87,7 +87,7 @@ public class WarningScreen extends Screen {
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         renderBackground(matrixStack);
-        new PermissionList((MARGIN/3)*17, height-(MARGIN/3)*11, 20).render(matrixStack, mouseX, mouseY, partialTicks);
+        new PermissionList((MARGIN/3)*17, height-(MARGIN/3)*11, 18).render(matrixStack, mouseX, mouseY, partialTicks);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
         drawCenteredMultilineString(matrixStack, font, new StringTextComponent(langKeys.get("title")).withStyle(TextFormatting.RED), width/2, MARGIN/2, DEFAULT_COLOR);

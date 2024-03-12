@@ -2,15 +2,18 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'org.spongepowered.mixin'
 
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
@@ -34,6 +37,8 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
+            arg "-mixin.config=blackmirror.mixin.json"
+
             mods {
                 blackmirrorjs {
                     source sourceSets.main
@@ -45,6 +50,8 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
+            arg "-mixin.config=blackmirror.mixin.json"
 
             mods {
                 blackmirrorjs {
@@ -85,11 +92,20 @@ dependencies {
     implementation fg.deobf("me.shedaniel:architectury-forge:1.22.32")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:1605.3.19-build.229")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:1605.1.5-build.75")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "blackmirror.mixin-refmap.json"
 }
 
 jar {
     manifest {
         attributes([
+            "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+            "TweakOrder": 0,
+            "MixinConfigs": "blackmirror.mixin.json",
             "Specification-Title": "blackmirrorjs",
             "Specification-Vendor": "blackmirrorjsareus",
             "Specification-Version": "1",

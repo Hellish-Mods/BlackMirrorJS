@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "package": "site.hellishmods.blackmirrorjs.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "ClassFilterMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "refmap": "blackmirror.mixin-refmap.json",
+    "minVersion": "0.8"
+}
